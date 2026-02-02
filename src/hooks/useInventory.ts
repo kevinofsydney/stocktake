@@ -107,6 +107,65 @@ export function useInventory() {
     [categories, setCategories]
   );
 
+  const updateCategory = useCallback(
+    (id: string, newName: string) => {
+      const trimmedName = newName.trim();
+      if (!trimmedName) return false;
+
+      const exists = categories.some(
+        (cat) => cat.id !== id && cat.name.toLowerCase() === trimmedName.toLowerCase()
+      );
+      if (exists) return false;
+
+      const oldCategory = categories.find((cat) => cat.id === id);
+      if (!oldCategory) return false;
+
+      // Update category name
+      setCategories((prev) =>
+        prev.map((cat) => (cat.id === id ? { ...cat, name: trimmedName } : cat))
+      );
+
+      // Update all items with the old category name
+      setItems((prev) =>
+        prev.map((item) =>
+          item.category === oldCategory.name
+            ? { ...item, category: trimmedName, updatedAt: Date.now() }
+            : item
+        )
+      );
+
+      return true;
+    },
+    [categories, setCategories, setItems]
+  );
+
+  const deleteCategory = useCallback(
+    (id: string, reassignTo?: string) => {
+      const categoryToDelete = categories.find((cat) => cat.id === id);
+      if (!categoryToDelete) return false;
+
+      // If there are items in this category, reassign them
+      if (reassignTo) {
+        setItems((prev) =>
+          prev.map((item) =>
+            item.category === categoryToDelete.name
+              ? { ...item, category: reassignTo, updatedAt: Date.now() }
+              : item
+          )
+        );
+      } else {
+        // Delete items in this category if no reassignment
+        setItems((prev) =>
+          prev.filter((item) => item.category !== categoryToDelete.name)
+        );
+      }
+
+      setCategories((prev) => prev.filter((cat) => cat.id !== id));
+      return true;
+    },
+    [categories, setCategories, setItems]
+  );
+
   const sortedItems = useMemo(
     () => [...items].sort((a, b) => b.updatedAt - a.updatedAt),
     [items]
@@ -127,5 +186,7 @@ export function useInventory() {
     incrementCount,
     decrementCount,
     addCategory,
+    updateCategory,
+    deleteCategory,
   };
 }
