@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# Personal Stocktake
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightning-fast webapp for personal household inventory tracking. Track stock levels of common supplies (batteries, soap, cleaning products) without any friction, logins, or setup screens.
 
-Currently, two official plugins are available:
+## Why This Exists
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Kevin is tired of never knowing how many batteries, trash bags, or boxes of soap he actually has at home. Paper lists get lost and remembering details mentally is unreliable. This app solves that problem with a dead-simple tool: open the app, see your inventory, update counts with a tap, and know exactly what you have.
 
-## React Compiler
+No more overbuying. No more surprise shortages. Household management as easy as it should be.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Zero friction** — No login, no setup, no onboarding. Open and use immediately.
+- **Instant inline editing** — Click a count to edit, use +/- buttons for quick adjustments
+- **Category filtering** — Filter by category to find items fast
+- **Custom categories** — Add your own categories on the fly
+- **Low stock warnings** — Visual indicators for zero/low stock items
+- **Fully offline** — All data stored in browser localStorage
+- **Mobile-friendly** — Responsive design, touch-optimized controls
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Data Storage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+All inventory data is stored locally in your browser's localStorage. No server, no accounts, no data leaves your device. You remain fully in control of your data.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Note:** Clearing browser data will erase your inventory.
+
+## Design Principles
+
+- **Speed first** — Fastest possible input/edit experience
+- **Minimalism** — Large, tappable controls; immediate feedback
+- **Mobile-ready** — Works great on phone, tablet, and desktop
+- **Accessible** — Strong color contrast, proper text sizing, keyboard navigation
+
+## Future Roadmap
+
+- [ ] Item photos/attachments
+- [ ] PWA support for true offline access
+- [ ] Export/import inventory data
